@@ -1,12 +1,14 @@
 import pickle
 import pandas as pd
+import sys
+import json
 import numpy as np 
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import CountVectorizer
 from flask import Flask, request, render_template, jsonify
-df = pd.read_csv("./dataset.csv", encoding="latin-1")
+df = pd.read_csv("D:\disease_predictor\backend\PythonModel\dataset.csv", encoding="latin-1")
 print(df.head(5))
 model = LinearRegression()
 
@@ -38,7 +40,9 @@ model = LinearRegression()
 model.fit(X_train, y_train)
 
 # Sample input symptom for prediction
-input_symptom = "Palpitations, Sweating, Trembling, Shortness of breath, Fear of losing control, Dizziness"
+# input_symptom = "Palpitations, Sweating, Trembling, Shortness of breath, Fear of losing control, Dizziness"
+input_symptom =  json.loads(sys.argv[1])
+
 
 # Preprocess the input symptom using the trained CountVectorizer
 X_input = vectorizer.transform([input_symptom])
