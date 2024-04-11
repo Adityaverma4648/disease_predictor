@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import CountVectorizer
 from flask import Flask, request, render_template, jsonify
-df = pd.read_csv("D:\disease_predictor\backend\PythonModel\dataset.csv", encoding="latin-1")
+df = pd.read_csv("D:\\disease_predictor\\backend\\PythonModel\\dataset.csv", encoding="latin-1")
 print(df.head(5))
 model = LinearRegression()
 

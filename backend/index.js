@@ -22,6 +22,8 @@ app.get('/predict', (req, res) => {
   // Assume req.body contains symptoms data
   const symptoms = req.body;
 
+  console.log(symptoms);
+
   // Python script path
   const scriptPath = './PythonModel/untitled.pkl';
 
