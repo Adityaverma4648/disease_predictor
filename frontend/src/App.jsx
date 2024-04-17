@@ -25,7 +25,7 @@ function App() {
       const response = await axios.get("http://localhost:7000/predict", {
         symptoms,
       });
-      setPrediction(response.data.prediction);
+      setPrediction(response.data.prediction); 
     } catch (error) {
       console.error(error);
     }

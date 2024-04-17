@@ -27,19 +27,26 @@ app.get('/predict', (req, res) => {
   // Python script path
   const scriptPath = './PythonModel/untitled.pkl';
 
-  // Prepare PythonShell options
-  const options = {
-    mode: 'json',
-    pythonOptions: ['-u'],
-    args: [JSON.stringify(symptoms)],
+  // console.log(JSON.stringify(symptoms));
+
+  // // Prepare PythonShell options
+  // const options = {
+  //   mode: 'json',
+  //   pythonOptions: ['-u'],
+  //   args: [JSON.stringify(symptoms)],
+  // };
+
+  let options = {
+    args: [JSON.stringify(symptoms)] // Pass symptoms as argument to Python script
   };
 
   // Run the Python script
-  PythonShell.run(scriptPath, options, (err, results) => {
+  PythonShell.run(scriptPath,options, (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error predicting disease.');
     } else {
+      console.log(results);
       const prediction = results[0];
       res.json({ prediction });
     }
