@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import CountVectorizer
 from flask import Flask, request, render_template, jsonify
 df = pd.read_csv("D:\\disease_predictor\\backend\\PythonModel\\dataset.csv", encoding="latin-1")
-print(df.head(5))
+#print(df.head(5))
 model = LinearRegression()
 
 with open('model.pkl','wb') as file:
@@ -18,15 +18,15 @@ with open('model.pkl','wb') as file:
 with open('model.pkl','rb') as file:
     model = pickle.load(file)
 
-    print("Model loaded successfully!")
-    print("Loaded Model:", model)
+    #print("Model loaded successfully!")
+    #print("Loaded Model:", model)
 
 
 label_encoder = LabelEncoder()
 df['disease_encoded'] = label_encoder.fit_transform(df['disease'])
 
 # Tokenize symptoms
-vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', '))
+vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', '),lowercase=True)
 X = vectorizer.fit_transform(df['symptoms'])
 
 # Step 3: Split data into features and target
@@ -43,9 +43,10 @@ model.fit(X_train, y_train)
 # input_symptom = "Palpitations, Sweating, Trembling, Shortness of breath, Fear of losing control, Dizziness"
 input_symptom =  json.loads(sys.argv[1])
 
+print("input_symptom" , input_symptom)
 
 # Preprocess the input symptom using the trained CountVectorizer
-X_input = vectorizer.transform([input_symptom])
+X_input = vectorizer.transform(input_symptom)
 
 print(X_input)
 

@@ -10,6 +10,8 @@ import OutputSection from "./Components/OutputSection";
 import About from "./Components/About";
 import Contact from "./Components/Contact";
 
+import {FaApple, FaAtlassian, FaGoogle, FaMicrosoft} from "react-icons/fa"
+
 
 function App() {
   const [symptoms, setSymptoms] = useState("");
@@ -57,93 +59,47 @@ function App() {
       <main>
         <Navbar />
         <div
-          data-type="grid-layout"
-          className="react-grid-item ltr  undefined  cd-padding   "
-          id="Divbulq"
-          data-clientid="Divbulq"
-          data-displayname="Container"
+          className="md:h-[60vh] h-[100vh] flex justify-center items-center"
         >
           <div
-            data-type="grid-layout"
-            className="react-grid-item ltr  false  cd-padding   "
-            id="DivkpxD"
-            data-clientid="DivkpxD"
-            data-displayname="Hero Wrap"
+            className="h-full flex md:flex-row flex-col justify-center items-center"
           >
             <div
-              data-type="grid-layout"
-              className="react-grid-item ltr  false  cd-padding   "
-              id="DivrJDc"
-              data-clientid="DivrJDc"
-              data-displayname="Hero split"
+              className="md:w-1/2 flex h-full justify-center items-center relative p-6"
             >
-              <span
-                id="SpandYD3"
-                data-clientid="SpandYD3"
-                data-displayname="H1 Center Header"
-                className="react-grid-item ltr  false   "
-              >
-                <p>Your Health Diagnosis, now Simplified </p>
-              </span>
-              <span
-                id="ParagraphNiTO"
-                data-clientid="ParagraphNiTO"
-                data-displayname=""
-                className="react-grid-item ltr  false   "
-              >
-                <p>
+              
+                <div className="w-10/12 flex flex-col justify-center items-center relative font-bold text-5xl">Your Health Diagnosis, now Simplified 
+                <p className="text-lg font-normal">
                   Just type in your symptoms and get instant, accurate results.
                   Understand what your body is telling you with HealHive - your
                   personal health assistant.
-                </p>
-              </span>
-              <button
-                id="Button51uV"
+                </p></div>
+                
+         
+              <div
                 // onClick="predictDisease()"
-                data-clientid="Button51uV"
-                data-displayname="Primary button"
-                className="react-grid-item ltr  false   "
+                className="border border-black w-[100px] h-[100px] bg-gray-200 hover:bg-gray-400 hover:text-white text-black font-medium absolute top-0 right-0 flex justify-center items-center text-center m-2 cursor-pointer"
+
               >
-                <p>Start Diagnosing Now </p>
-              </button>
+                Start Diagnosing Now
+              </div>
             </div>
             <div
-              data-type="grid-layout"
-              className="react-grid-item ltr  false  cd-padding   "
-              id="DivgOtN"
-              data-clientid="DivgOtN"
-              data-displayname="Hero split"
+               className="min-w-1/2 h-full flex justify-center items-center overflow-hidden"
             >
-              <span
-                id="1840x833Kt0W"
-                data-displayname="image"
-                className="react-grid-item ltr  false"
-              >
+             
                 <img
-                  className=""
-                  data-clientid="1840x833Kt0W"
-                  id="1840x833Kt0W-id"
+                  className="w-full"
                   src="https://res.cloudinary.com/storylens/image/upload/v1702151671/uxsd31xlalnaslcvqmkb.jpg"
                   alt="sl"
-                  // compprops="[object Object]"
-                  // type="page"
-                  // clientid="1840x833Kt0W"
-                  // cssobj="[object Object]"
-                  // cssstring="[object Object]"
-                  // parent_id="DivgOtN"
-                  // name="1840x833"
-                  // componentstyle="[object Object]"
+                  
                 />
-              </span>
+             
             </div>
           </div>
         </div>
         <div
-          data-type="grid-layout"
-          className="react-grid-item ltr  undefined  cd-padding   "
-          id="DivcLns"
-          data-clientid="DivcLns"
-          data-displayname="Flex - Horizontal"
+          className=""
         >
           <div
             data-type="grid-layout"
@@ -152,17 +108,12 @@ function App() {
             data-clientid="Div044G"
             data-displayname="Container"
           >
-            <span
-              id="SpanrTpH"
-              data-clientid="SpanrTpH"
-              data-displayname="Text"
-              className="react-grid-item ltr cd-paragraph-clean false   "
-            >
-              <p>
+            
+              <p className="text-3xl text-gray-400 h-32 text-center">
                 Loved by thousands of health-conscious individuals worldwide for
                 accurate results.{" "}
               </p>
-            </span>
+          
             <div
               data-type="grid-layout"
               className="react-grid-item ltr  false  cd-padding   "
@@ -170,69 +121,60 @@ function App() {
               data-clientid="SectionHU7i"
               data-displayname="Section block"
             >
-              <span
+              <div
                 id="SpanPlMf"
                 data-clientid="SpanPlMf"
                 data-displayname="Text"
-                className="react-grid-item ltr  false   "
+                className="flex flex-col justify-center items-center"
               >
+                 <FaMicrosoft className="w-full" />
                 <p>Microsoft </p>
-              </span>
+              </div>
               <span
                 id="SpanogzJ"
                 data-clientid="SpanogzJ"
                 data-displayname="Text"
-                className="react-grid-item ltr  false   "
+                className="react-grid-item ltr false flex justify-center items-center"
               >
+                 <FaAtlassian className="w-full" />
                 <p>Nuance </p>
               </span>
-              <span
+              <div
                 id="SpanTQaf"
                 data-clientid="SpanTQaf"
                 data-displayname="Text"
-                className="react-grid-item ltr  false   "
+                className="react-grid-item ltr false flex justify-center items-center "
               >
+                <FaGoogle className="w-full" />
                 <p>Google </p>
-              </span>
-              <span
+              </div>
+              <div
                 id="Span6izB"
                 data-clientid="Span6izB"
                 data-displayname="Text"
-                className="react-grid-item ltr  false   "
+                className="react-grid-item ltr false flex justify-center items-center   "
               >
+                <FaApple className="w-full" />
                 <p>Apple </p>
-              </span>
+              </div>
             </div>
             <div
-              data-type="grid-layout"
-              className="react-grid-item ltr  false  cd-padding   "
-              id="SectionSei4"
-              data-clientid="SectionSei4"
-              data-displayname="2 Columns"
+              className="react-grid-item ltr  false  cd-padding h-[50vh] flex justify-center items-center"
+            
             >
               <div
-                data-type="grid-layout"
-                className="react-grid-item ltr  false  cd-padding   "
-                id="SectionQ3E5"
-                data-clientid="SectionQ3E5"
-                data-displayname="Column-1"
+                className="react-grid-item ltr h-full false cd-padding flex flex-col justify-center items-start"
               >
-                <span
+                <div
                   id="Paragraphm2Iz"
                   data-clientid="Paragraphm2Iz"
                   data-displayname=""
                   className="react-grid-item ltr  false   "
                 >
-                  <p>Top-tier Tech for Health </p>
-                </span>
-                <span
-                  id="SpanlJyu"
-                  data-clientid="SpanlJyu"
-                  data-displayname="H1 Center Header"
-                  className="react-grid-item ltr  false   "
-                >
-                  <p>Why Choose HealHive for Diagnosis? </p>
-                </span>
+                  <p className="font-medium mb-6">Top-tier Tech for Health </p>
+          
+                  <p className="font-bold text-6xl mb-8">Why Choose HealHive for Diagnosis? </p>
+                </div>
                 <button
                   id="ButtonYmqs"
                   data-clientid="ButtonYmqs"
@@ -244,7 +186,7 @@ function App() {
               </div>
               <div
                 data-type="grid-layout"
-                className="react-grid-item ltr  false  cd-padding   "
+                className="react-grid-item ltr false cd-padding h-full "
                 id="SectioncRkJ"
                 data-clientid="SectioncRkJ"
                 data-displayname="Column-2"
@@ -253,7 +195,7 @@ function App() {
                   id="ParagraphJQDv"
                   data-clientid="ParagraphJQDv"
                   data-displayname=""
-                  className="react-grid-item ltr  false   "
+                  className="react-grid-item ltr  false text-right"
                 >
                   <p>
                     Our advanced AI algorithm understands your health concerns
