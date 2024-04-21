@@ -1,57 +1,94 @@
-const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const express = require('express');
 const { PythonShell } = require('python-shell');
-const os = require('os');
+const { spawn } = require('child_process');
+const data = require("./PythonModel/csvjson.json");
+const faculty = require("./PythonModel/faculty.json");
+const cors = require('cors');
+
 
 const app = express();
 const PORT = process.env.PORT || 7000;
 
-// Body parser middleware
+app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors());
 
-// MongoDB configuration
-// const dbURI = 'your_mongodb_connection_string';
-// mongoose
-//   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log('Connected to MongoDB'))
-//   .catch((err) => console.log('MongoDB connection error:', err));
+
+function runPythonScript(inputSymptom) {
+  return new Promise((resolve, reject) => {
+      const pythonProcess = spawn('python', ['./PythonModel/index.py', inputSymptom]);
+
+      let data = '';
+      pythonProcess.stdout.on('data', (chunk) => {
+          data += chunk.toString();
+      });
+
+      pythonProcess.stderr.on('data', (error) => {
+          reject(error.toString());
+      });
+
+      pythonProcess.on('close', (code) => {
+          if (code === 0) {
+              try {
+                  const result = JSON.parse(data);
+                  resolve(result);
+              } catch (parseError) {
+                  reject(parseError.toString());
+              }
+          } else {
+              reject(`Python process exited with code ${code}`);
+          }
+      });
+  });
+}
 
 // Disease prediction endpoint
 app.get('/predict', (req, res) => {
-  // Assume req.body contains symptoms data
-  const symptoms = req.body;
+  const symptoms = req.body; // Assuming input_symptom is the key in the JSON request
+
+  console.log('Received input_symptom:', JSON.stringify(symptoms)); // Debugging statement
+
+  // const data = symptoms.join(', ');
 
   console.log(symptoms);
 
-  // Python script path
-  const scriptPath = './PythonModel/untitled.pkl';
-
-  // console.log(JSON.stringify(symptoms));
-
-  // // Prepare PythonShell options
-  // const options = {
-  //   mode: 'json',
-  //   pythonOptions: ['-u'],
-  //   args: [JSON.stringify(symptoms)],
-  // };
-
-  let options = {
-    args: [JSON.stringify(symptoms)] // Pass symptoms as argument to Python script
-  };
-
-  // Run the Python script
-  PythonShell.run(scriptPath,options, (err, results) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error predicting disease.');
-    } else {
-      console.log(results);
-      const prediction = results[0];
-      res.json({ prediction });
-    }
+  runPythonScript(symptoms)
+  .then((result) => {
+      console.log(result);
+      if(result)
+        res.status(200).json({
+         result : result
+        })
+      else
+        res.status(400).json({
+      result : "Error finding results"})
+  })
+  .catch((error) => {
+      console.error('Error running Python script:', error);
   });
 });
+
+app.get('/data',(req,res)=>{
+  if(data){
+    res.status(200).json({result : data});
+  }
+  else
+    res.status(500).json({
+         result : "Error finding the data"
+     });
+})
+
+app.get('/doctor',(req,res)=>{
+  if(faculty) {
+  res.status(200).json({
+     result : faculty 
+  })}else{
+    res.status(500).json({
+      result : "Error finding data"
+    })
+  }
+})
 
 // Start server
 app.listen(PORT, () => {
