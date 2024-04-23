@@ -23,6 +23,14 @@ const Landing = () => {
               <div
                 // onClick="predictDisease()"
                 className="border border-black w-[100px] h-[100px] bg-gray-200 hover:bg-gray-400 hover:text-white text-black font-medium absolute top-0 right-0 flex justify-center items-center text-center m-2 cursor-pointer"
+                onClick={()=>{
+                     const element = document.getElementById("HeroSection");
+                     if(element){
+                      element.scrollIntoView({behavior : "smooth"});
+                     }else{
+                      console.error(`Element with id "${element}" not found.`)
+                     }
+                }}
 
               >
                 Start Diagnosing Now

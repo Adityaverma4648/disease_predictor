@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,7 +11,7 @@ const HeroSection = () => {
   const [precautions, setPrecautions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:7000/data").then((res) => {
+    axios.get("https://diseasepredictorbackend-7a3t.onrender.com/data").then((res) => {
       const array = [];
 
       setData(res.data.result);
@@ -34,7 +35,7 @@ const HeroSection = () => {
   const predictDisease = (e) => {
     console.log("Symptoms : ", symptoms);
     axios
-      .get("http://localhost:7000/predict", {
+      .get("https://diseasepredictorbackend-7a3t.onrender.com/predict", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,16 +48,26 @@ const HeroSection = () => {
   };
 
   useEffect(() => {
-    const matched = data.filter((item) => {
-      item[disease] == disease;
+
+    const diseaseArray = [];
+    data.map((d)=>{
+      diseaseArray.push(d.disease);  
     });
 
-    console.log(disease, matched);
-  }, [data, disease]);
+    console.log(diseaseArray);
+
+    const matched = data.filter((item) => {
+      return item.disease == disease;
+    });
+
+    setPrecautions(matched[0]?.precautions);
+
+    console.log("Disease :", disease, "matched :", matched);
+  }, [disease, data]);
 
   return (
     <>
-      <section className="hero bg-white">
+      <section className="hero bg-white" id="HeroSection">
         <div className="container">
           <h2>Your Health Companion</h2>
           <p>
@@ -68,7 +79,7 @@ const HeroSection = () => {
               <form className="flex md:flex-row flex-col justify-center items-center">
                 <label
                   htmlFor="diseaseCode"
-                  className="me-2 md:w-auto w-11/12 flex "
+                  className="me-2 md:w-auto w-11/12 flex font-semibold"
                 >
                   Enter Symptoms:
                 </label>
@@ -87,7 +98,7 @@ const HeroSection = () => {
 
                   <button
                     type="button"
-                    className="bg-black text-white rounded-md py-4 px-8"
+                    className="bg-black text-white rounded-md py-4 px-8 mx-2"
                     onClick={() => {
                       predictDisease();
                     }}
@@ -96,10 +107,19 @@ const HeroSection = () => {
                   </button>
                 </div>
               </form>
+              <div className="text-gray-400 my-4">
+                <span className="font-semibold">
+                  Enter the symptom in following format :
+                </span>
+                <span className="text-xl">
+                  [ "Pain","Swelling","Bruising","Deformity","Difficulty
+                  moving","Loss of function"]
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="bg-gray-300 w-full h-[40vh] m-8 overflow-y-scroll relative">
+          {/* <div className="bg-gray-300 w-full h-[40vh] m-8 overflow-y-scroll relative">
             <div className="flex justify-between items-center py-4 px-2">
               <div className="font-semibold text-xl">
                 Choose Symptoms from below list
@@ -121,7 +141,7 @@ const HeroSection = () => {
                 </button>
               );
             })}
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -131,15 +151,19 @@ const HeroSection = () => {
         id="output"
         // style="display: none;"
       >
-        <div id="result" className="container">
-          <h2>Diagnosis</h2>
-          <p>
-            <strong>Disease:</strong>
+        <div id="result" className="w-full text-3xl flex flex-col justify-start items-center px-8">
+          <h2 className="w-10/12 text-left my-2 font-bold underline">Diagnosis : </h2>
+          <p className="w-10/12 text-left my-2">
+            <strong >Predicted Disease:</strong>
+            <span className="text-2xl">
             {disease}
-            <span id="diseaseName"> </span>
+            </span>
           </p>
-          <p>
-            <strong>Precautions:</strong> <span id="precautions"> </span>
+          <p className="w-10/12 text-left my-2">
+            <strong>Predicted precautions for the predicted disease:</strong>
+            <span className="text-2xl">
+            {precautions}
+            </span>
           </p>
         </div>
       </section>

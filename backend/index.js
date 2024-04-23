@@ -4,6 +4,7 @@ const { PythonShell } = require('python-shell');
 const { spawn } = require('child_process');
 const data = require("./PythonModel/csvjson.json");
 const faculty = require("./PythonModel/faculty.json");
+const catgorizedDiseases = require("./PythonModel/Speacility.json");
 const cors = require('cors');
 
 
@@ -79,6 +80,35 @@ app.get('/data',(req,res)=>{
     res.status(500).json({
          result : "Error finding the data"
      });
+})
+
+app.get('/diseaseArray',(req,res)=>{
+  if(data){
+    const diseaseArray = [];
+    data.map((d)=>{
+      diseaseArray.push(d.disease);  
+    });
+    const uniqueValues = Array.from(new Set(diseaseArray))
+    res.status(200).json({
+      result : uniqueValues
+    })
+  }else{
+    res.status(500).json({
+      result : "Error Finding it"
+    })
+  }
+})
+
+app.get('/categorizedDiseases',(req,res)=>{
+  if(catgorizedDiseases){
+    res.status(200).json({
+      result : catgorizedDiseases
+    })
+  }else{
+    res.status(500).json({
+      result : "Error Finding it"
+    })
+  }
 })
 
 app.get('/doctor',(req,res)=>{
