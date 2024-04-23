@@ -45,13 +45,15 @@ function runPythonScript(inputSymptom) {
 
 // Disease prediction endpoint
 app.get('/predict', (req, res) => {
-  const symptoms = req.body; // Assuming input_symptom is the key in the JSON request
 
-  console.log('Received input_symptom:', JSON.stringify(symptoms)); // Debugging statement
+  console.log(req.query);
+
+  const symptoms = req.query.symptoms; // Assuming input_symptom is the key in the JSON request
+
+  console.log('Received input_symptom:', symptoms); // Debugging statement
 
   // const data = symptoms.join(', ');
 
-  console.log(symptoms);
 
   runPythonScript(symptoms)
   .then((result) => {

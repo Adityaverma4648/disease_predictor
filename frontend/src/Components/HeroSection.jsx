@@ -13,15 +13,15 @@ const HeroSection = () => {
     axios.get("http://localhost:7000/data").then((res) => {
       const array = [];
 
-      setData(res.data.result)
+      setData(res.data.result);
 
       res.data.result.forEach((item) => {
-        const symptoms = item.symptoms.split(", ");
+        const s = item.symptoms.split(", ");
         // console.log(symptoms);
-        symptoms.forEach((d) => {
-          symptoms.forEach((symptom) => {
-            if (!array.includes(symptom)) {
-              array.push(symptom);
+        s.forEach((d) => {
+          s.forEach((id) => {
+            if (!array.includes(id)) {
+              array.push(id);
             }
           });
         });
@@ -32,23 +32,27 @@ const HeroSection = () => {
   }, []);
 
   const predictDisease = (e) => {
-    e.preventDefault();
-    console.log(symptoms)
-
-    axios.get("http://localhost:7000/predict", symptoms ).then((res) => {
-      console.log(res);
-      setDisease(res.data.result.predicted_disease)
-    });
+    console.log("Symptoms : ", symptoms);
+    axios
+      .get("http://localhost:7000/predict", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: { symptoms: symptoms },
+      })
+      .then((res) => {
+        console.log(res);
+        setDisease(res.data.result.predicted_disease);
+      });
   };
 
-  useEffect(()=>{
-    console.log(data);
-    const matched = data.filter((item)=>{
-       item[disease] == disease
-    })
+  useEffect(() => {
+    const matched = data.filter((item) => {
+      item[disease] == disease;
+    });
 
-    console.log(disease , matched);
-  },[data , disease])
+    console.log(disease, matched);
+  }, [data, disease]);
 
   return (
     <>
@@ -74,9 +78,9 @@ const HeroSection = () => {
                     id="diseaseCode"
                     name="diseaseCode"
                     className="md:w-[40vw] w-[60vw] border border-black rounded-md py-4 px-8 text-black outline-none select-none"
-                    value={symptoms}
                     onChange={(e) => {
                       setSymptoms(e.target.value);
+                      console.log(symptoms);
                     }}
                     required
                   />
@@ -130,7 +134,9 @@ const HeroSection = () => {
         <div id="result" className="container">
           <h2>Diagnosis</h2>
           <p>
-            <strong>Disease:</strong>{disease}<span id="diseaseName"> </span>
+            <strong>Disease:</strong>
+            {disease}
+            <span id="diseaseName"> </span>
           </p>
           <p>
             <strong>Precautions:</strong> <span id="precautions"> </span>
